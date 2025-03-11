@@ -1,0 +1,23 @@
+YAML: 1.0
+source_path: /home/xmf/xmf_bags/temp_test/pcd_align/scans148.pcd
+target_path: /home/xmf/xmf_bags/temp_test/pcd_align/scans110.pcd  #基准点云路径
+is_show_temp: true  # 是否显示中间点云结果
+# 保存点云结果相关参数
+save_pcd_result_params: 
+  is_save_pcd: true  # 是否保存点云结果,如果为true，则下面的路径有效
+  source_trans_filtered_path: /home/xmf/xmf_bags/temp_test/pcd_align/result/source_trans_filtered.pcd  # 保存源点云滤波后并且根据配准结果变换后的点云路径
+  target_filtered_path: /home/xmf/xmf_bags/temp_test/pcd_align/result/target_filtered.pcd #保存目标点云滤波后的点云路径
+  source_trans_noGround_path: /home/xmf/xmf_bags/temp_test/pcd_align/result/source_trans_noGround.pcd # 保存源点云滤波后并且根据配准结果变换后的点云路径(去地面点)
+  source_NoGroundPoint_path: /home/xmf/xmf_bags/temp_test/pcd_align/result/source_NoGroundPoint.pcd # 保存源点云滤波后的点云路径(去地面点)
+  target_NoGroundPoint_path: /home/xmf/xmf_bags/temp_test/pcd_align/result/target_NoGroundPoint.pcd #保存目标点云滤波后的点云路径(去地面点)
+#滤波相关参数
+filter_params:
+  voxelgrid_leaf_size: 0.1  #体素滤波参数
+
+  outlier_removal_mean_k: 20  #统计滤波参数（去除离群点）
+  outlier_removal_stddev_mul_thresh: 1.0  #统计滤波参数 （去除离群点）
+
+  #平面分割相关参数
+  sac_max_iterations: 3000  #随机采样一致性滤波参数
+  sac_distance_threshold: 0.1  #随机采样一致性滤波参数 //设置点到模型的最大允许距离，用于决定一个点是否属于该模型
+
