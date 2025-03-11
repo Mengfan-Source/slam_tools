@@ -41,10 +41,14 @@ make -j8
 ```
 
 ## 更新日志
-20250120:在slam_test的基础上添加了11所拼接点云的程序，并编译成功
-20250210:改进标定相关内容，并编译成功
-    采用数学方法计算初值，方案思路：https://uw7f7qxdyrb.feishu.cn/docx/YxjGdQiv4ovVWmxZVkcc1W6WnKe?from=from_copylink
-    遍历两组初值分别配准：使用平均配准误差来衡量配准结果
-    使用yaml-cpp来规范参数读取过程
+20250120:在slam_test的基础上添加了11所拼接点云的程序，并编译成功  
+  
+20250210:改进标定相关内容，并编译成功  
 
-    原来手动赋初值的版本备份在了：/home/xmf/xmf_slam/slam_tools/back_up/pcd_align手动提供初值版本.cpp
+    采用数学方法计算初值，方案思路：https://uw7f7qxdyrb.feishu.cn/docx/YxjGdQiv4ovVWmxZVkcc1W6WnKe?from=from_copylink  
+
+    遍历两组初值分别配准：使用平均配准误差来衡量配准结果  
+
+    使用yaml-cpp来规范参数读取过程  
+
+    原来手动赋初值的版本备份在了：/home/xmf/xmf_slam/slam_tools/back_up/pcd_align手动提供初值版本.cpp  
