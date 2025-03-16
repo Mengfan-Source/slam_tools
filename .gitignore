@@ -1,4 +1,10 @@
-.vscode/
-build/
-log/
-data/
+/.vscode/
+/build/
+/log/
+/data/
+
+/thirtpart/g2o/build/
+/thirtpart/g2o/lib/
+/thirtpart/g2o/bin/
+/thirtpart/g2o/.vs/
+/thirtpart/g2o/.vscode/
