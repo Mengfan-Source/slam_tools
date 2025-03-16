@@ -101,3 +101,15 @@ target_link_libraries(test_euler_angle
                                     ${PCL_LIBRARIES}
                                    ${catkin_LIBRARIES}  
                                 )
+                                
+add_executable(pcd_align_filtered  src/src/pcd_align_filtered.cpp src/src/ndt_3d.cc src/src/point_cloud_utils.cc)
+target_link_libraries(pcd_align_filtered 
+                                        ${catkin_LIBRARIES}  
+                                        ${Boost_LIBRARIES}
+                                        ${PCL_LIBRARIES}
+                                        tbb
+                                        glog 
+                                        gflags#对于tbb、glog、gflags等库，只需要链接到可执行文件中，并不需要find_package和include_directories
+                                        ${yaml-cpp_LIBRARIES}
+                                        yaml-cpp
+                                        )
