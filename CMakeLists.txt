@@ -113,3 +113,10 @@ target_link_libraries(pcd_align_filtered
                                         ${yaml-cpp_LIBRARIES}
                                         yaml-cpp
                                         )
+
+                                        
+add_executable(rslidar_test  src/src/rslidar_test.cpp)   
+target_link_libraries(rslidar_test
+                                         ${catkin_LIBRARIES}  
+                                         ${PCL_LIBRARIES}
+                                         )
