@@ -57,14 +57,15 @@ int main(){
 
     //创建一个四元数 顺序wxyz
     Eigen::Quaterniond q_1(0.0029166745953261852,0.7073081731796265,-0.7068824768066406,0.004880243446677923);
-    std::cout << "q_1 = \n" << q_1.coeffs() << std::endl;//输出顺序xyzw，与存储顺序相反
+    std::cout << "q:airy(xyzw) = \n" << q_1.coeffs() << std::endl;//输出顺序xyzw，与存储顺序相反
     //将四元数转换为ZYX欧拉角
     Eigen::Vector3d rpy_q1 = q_1.toRotationMatrix().eulerAngles(2,1,0);//zyx顺序，即roll pitch yaw顺序
-    std::cout << "rpy from quaterniond = \n" << rpy_q1 * RAD2DEG << std::endl; //roll pitch yaw
+    std::cout << "airy rpy from quaterniond = \n" << rpy_q1 * RAD2DEG << std::endl; //roll pitch yaw
     //将四元数转换为旋转矩阵
     Eigen::Matrix3d R_q1 = q_1.toRotationMatrix();
-    std::cout << "R from quaterniond = \n" << R_q1 << std::endl;
-
+    std::cout << "airy R from quaterniond = \n" << R_q1 << std::endl;
+    std::cout << "airy R transpose = \n" << R_q1.transpose() << std::endl;
+    std::cout << "airy R inverse = \n" << R_q1.inverse() << std::endl;
     return 0;
 }
 
