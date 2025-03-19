@@ -8,6 +8,7 @@
 ### 6.体素滤波
 ### 7.测试几个库旋转矩阵、四元数、欧拉角、李代数的互相转换关系
 ### 8.配准相邻两帧相机输出的点云，配准之前滤波（11所给的数据包做验证）
+### 9.测试rs_lidar数据转换
 ## 编译安装
 ### 1.下载源码
 ```bash
@@ -47,5 +48,24 @@ make -j8
     - 遍历两组初值分别配准：使用平均配准误差来衡量配准结果  
     - 使用yaml-cpp来规范参数读取过程  
     - 原来手动赋初值的版本备份在了：/home/xmf/xmf_slam/slam_tools/back_up/pcd_align手动提供初值版本.cpp  
-- 20250316：添加NDT配准相邻两帧点云程序（11所给的数据用相邻两帧相机输出的点云数据做配准，配准初值设置为0）pcd_align_filtered.cpp
+- 20250316:添加NDT配准相邻两帧点云程序（11所给的数据用相邻两帧相机输出的点云数据做配准，配准初值设置为0）pcd_align_filtered.cpp
     - 添加了滤波程序，滤波操作并行处理，但是报错尚未解决
+- 20250319:添加rslidar激光雷达测试程序:/home/xmf/xmf_slam/slam_tools/src/src/rslidar_test.cpp
+    - 主要为了测试rslidar的pointcloud2数据字段格式及其转换
+    - 适配的数据格式：XYZRTF   ----->这里需要修改驱动/home/xmf/XMF_Driver/rslidar_sdk_ws/src/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，现在设置为XYZRTF
+        rslidar_sdk的readme中说明的数据格式如下：
+        ```C++
+        struct PointXYZIRTF
+        {
+        float x;
+        float y;
+        float z;
+        uint8_t intensity;
+        uint16_t ring;
+        double timestamp;
+        uint8_t feature;
+        };
+        ```
+        但是实际测试时候发现只有将intensity和feature字段改为float类型才可以正常接收使用，具体见/home/xmf/xmf_slam/slam_tools/src/src/rslidar_test.cpp中PCL数据点的定义
+    - 一帧数据中每个点的偏移时间与其他雷达不同，rs_lidar的偏移时间是运行时刻递增的，而不是一个单纯的偏移量，因此在接入使用IMU进行运动畸变去除的SLAM算法时需要将每个点的偏移时间设置为当前点的时间减去第一个点的相对时间。
+    - 这个激光雷达一帧数据中每个点的偏移时间单位是秒
