@@ -120,3 +120,11 @@ target_link_libraries(rslidar_test
                                          ${catkin_LIBRARIES}  
                                          ${PCL_LIBRARIES}
                                          )
+add_executable(merge_points_online  src/src/merge_points_online.cpp)   
+target_link_libraries(merge_points_online
+  ${Boost_FILESYSTEM_LIBRARY}
+  ${catkin_LIBRARIES}  
+  ${PCL_LIBRARIES}
+  glog
+  gflags
+)
