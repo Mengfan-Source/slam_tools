@@ -69,3 +69,25 @@ make -j8
         但是实际测试时候发现只有将intensity和feature字段改为float类型才可以正常接收使用，具体见/home/xmf/xmf_slam/slam_tools/src/src/rslidar_test.cpp中PCL数据点的定义
     - 一帧数据中每个点的偏移时间与其他雷达不同，rs_lidar的偏移时间是运行时刻递增的，而不是一个单纯的偏移量，因此在接入使用IMU进行运动畸变去除的SLAM算法时需要将每个点的偏移时间设置为当前点的时间减去第一个点的相对时间。
     - 这个激光雷达一帧数据中每个点的偏移时间单位是秒
+- 20250327:添加在线激光雷达数据点拼接程序（11所项目需要）merge_points_online.cpp
+    - 在merge_single_point_11基础上修改为点云在线拼接版本:订阅fast_lio的Odometry话题消息，拼接相机点云
+    - 插值方法尝试没成功，使用变量更新方式更新实时位姿
+    - 对于相机点云拖尾和噪点现象的滤波处理(以下滤波器件顺序处理)
+        - 跳点滤波
+        - StatisticalOutlierRemoval利群点去除
+        - RadiusOutlierRemoval半径滤波
+        - 体素滤波
+        - 直通滤波、滤除固定角度的点(LOAM思想)
+    - 启动步骤
+    ```bash
+    roscore
+
+    cd /home/xmf/xmf_slam/slam_tools/build
+    ./merge_points_online
+    
+    cd /home/xmf/xmf_project/cetc11/fast_lio_cetc
+    roslaunch fast_lio my_test_x30.launch
+
+    rviz :/home/xmf/xmf_project/cetc11/fast_lio_cetc/test.rviz
+    
+    ```
