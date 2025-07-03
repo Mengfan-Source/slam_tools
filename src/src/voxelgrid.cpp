@@ -5,8 +5,8 @@
 #include <pcl/filters/voxel_grid.h>
 #include "point_cloud_utils.h"
 #include <pcl/filters/passthrough.h>
-DEFINE_string(source, "/home/xmf/xmf_slam/fast_lio_ws/src/PCD/scans.pcd", "点云路径");
-DEFINE_string(source_filtered, "/home/xmf/xmf_slam/fast_lio_ws/src/PCD/scans_filted_0.1.pcd", "点云路径");
+DEFINE_string(source, "/home/xmf/xmf_slam/mapping_offline_test/data/mapdata/map_opti2.pcd", "点云路径");
+DEFINE_string(source_filtered, "/home/xmf/xmf_slam/mapping_offline_test/data/mapdata/map_filtered.pcd", "点云路径");
 
 int main(int argc, char** argv) {
     FLAGS_log_dir = "/home/xmf/xmf_slam/slam_tools/log";
@@ -29,14 +29,14 @@ int main(int argc, char** argv) {
     pcl::PassThrough<xmf::PointType> passy;
     passy.setInputCloud(source_filtered_z);
     passy.setFilterFieldName("y");
-    passy.setFilterLimits(-500, 80);
+    passy.setFilterLimits(-500, 500);
     passy.filter(*source_filtered_y);
     //滤除X轴
     xmf::CloudPtr source_filtered_x(new xmf::PointCloudType);
     pcl::PassThrough<xmf::PointType> passx;
     passx.setInputCloud(source_filtered_y);
     passx.setFilterFieldName("x");
-    passx.setFilterLimits(-200, 20);
+    passx.setFilterLimits(-500, 500);
     passx.filter(*source_filtered_x);
 
     //体素滤波
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
     xmf::CloudPtr source_filtered(new xmf::PointCloudType);
     pcl::VoxelGrid<xmf::PointType> sor_source;  
     sor_source.setInputCloud(source_filtered_x);  
-    sor_source.setLeafSize(0.1f, 0.1f, 0.1f); // 设置体素的大小，这里是1cm  
+    sor_source.setLeafSize(0.2f, 0.2f, 0.2f); // 设置体素的大小，这里是1cm  
     sor_source.filter(*source_filtered);  
     xmf::SaveCloudToFile(fLS::FLAGS_source_filtered, *source_filtered);
     return 0;

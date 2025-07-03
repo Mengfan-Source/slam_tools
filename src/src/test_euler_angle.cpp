@@ -68,7 +68,18 @@ int main(){
     std::cout << "airy R inverse = \n" << R_q1.inverse() << std::endl;
     return 0;
 }
-
+/* SE3转xyz和四元数
+    void RosIo::PubPath(const ros::Time& stamp,std::string frame_id){
+        geometry_msgs::PoseStamped pose;
+        pose.pose.position.x = current_pose_out_.translation().x();
+        pose.pose.position.y = current_pose_out_.translation().y();
+        pose.pose.position.z = current_pose_out_.translation().z();
+        pose.pose.orientation.w = current_pose_out_.unit_quaternion().w();
+        pose.pose.orientation.x = current_pose_out_.unit_quaternion().x();
+        pose.pose.orientation.y = current_pose_out_.unit_quaternion().y();
+        pose.pose.orientation.z = current_pose_out_.unit_quaternion().z();
+    }
+*/
 
 
 
