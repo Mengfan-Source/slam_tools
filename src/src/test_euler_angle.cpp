@@ -9,15 +9,16 @@ constexpr double DEG2RAD = M_PI / 180.0;
 constexpr double RAD2DEG = 180.0/M_PI ;
 
 int main(){
-    double x_angle = 30.0;  
-    double y_angle = 40.0; 
-    double z_angle = 70.0;  
+    double x_angle = 0.0;  
+    double y_angle = 90.0; 
+    double z_angle = 0.0;  
     //通过欧拉角构造旋转矩阵，ZYX顺序（RPY顺序）
     Eigen::Matrix3d R;
     R = (Eigen::AngleAxisd(z_angle * DEG2RAD, Eigen::Vector3d::UnitZ())
       * Eigen::AngleAxisd(y_angle * DEG2RAD, Eigen::Vector3d::UnitY())
       * Eigen::AngleAxisd(x_angle * DEG2RAD, Eigen::Vector3d::UnitX())).toRotationMatrix();
     std::cout << "matrix R = \n" << R << std::endl;
+    std::cout << "matrix R = \n" << Eigen::AngleAxisd(y_angle * DEG2RAD, Eigen::Vector3d::UnitY()).toRotationMatrix() << std::endl;
     //通过旋转矩阵求欧拉角 ZYX顺序（RPY顺序）
     Eigen::Vector3d rpy = R.eulerAngles(2,1,0);//zyx顺序，即roll pitch yaw顺序
     std::cout << "rpy from matrix = \n" << rpy * RAD2DEG << std::endl; //roll pitch yaw
@@ -66,6 +67,16 @@ int main(){
     std::cout << "airy R from quaterniond = \n" << R_q1 << std::endl;
     std::cout << "airy R transpose = \n" << R_q1.transpose() << std::endl;
     std::cout << "airy R inverse = \n" << R_q1.inverse() << std::endl;
+
+    
+
+    Eigen::Matrix3d R_111;
+    R_111 = (Eigen::AngleAxisd(z_angle * DEG2RAD, Eigen::Vector3d::UnitZ())
+      * Eigen::AngleAxisd(y_angle * DEG2RAD, Eigen::Vector3d::UnitY())
+      * Eigen::AngleAxisd(x_angle * DEG2RAD, Eigen::Vector3d::UnitX())).toRotationMatrix();
+    Eigen::Matrix3d R_human_mount = R_111*R_q1.transpose();
+    std::cout << "R_human_mount \n" << R_human_mount << std::endl;
+
     return 0;
 }
 /* SE3转xyz和四元数

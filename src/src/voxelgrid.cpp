@@ -5,8 +5,8 @@
 #include <pcl/filters/voxel_grid.h>
 #include "point_cloud_utils.h"
 #include <pcl/filters/passthrough.h>
-DEFINE_string(source, "/home/xmf/xmf_slam/mapping_offline_test/data/mapdata/map_opti2.pcd", "点云路径");
-DEFINE_string(source_filtered, "/home/xmf/xmf_slam/mapping_offline_test/data/mapdata/map_filtered.pcd", "点云路径");
+DEFINE_string(source, "/home/xmf/xmf_learning/fish_ros_ws/data/fast_lio_mapping.pcd", "点云路径");
+DEFINE_string(source_filtered, "/home/xmf/xmf_learning/fish_ros_ws/data/fast_lio_mapping0.2.pcd", "点云路径");
 
 int main(int argc, char** argv) {
     FLAGS_log_dir = "/home/xmf/xmf_slam/slam_tools/log";

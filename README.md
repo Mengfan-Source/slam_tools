@@ -91,3 +91,6 @@ make -j8
     rviz :/home/xmf/xmf_project/cetc11/fast_lio_cetc/test.rviz
     
     ```
+- 20251118:添加从bag包查看pcl::pointcloud2类型点云数据字段格式
+    - 使用方法: python/pcl2_msg_check.py文件中修改点云bag包路径
+                python3 pcl2_msg_check.py
