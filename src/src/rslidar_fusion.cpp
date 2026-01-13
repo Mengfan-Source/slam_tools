@@ -1,6 +1,6 @@
 /**
  * @file lidar_fusion.cpp
- * @brief 多个rslidar数据融合
+ * @brief 多个rslidar数据融合,针对山猫m20
  * @author MengfanXu (15262133937@163.com)
  * @version 1.0
  * @date 2026-0108

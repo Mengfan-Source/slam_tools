@@ -94,3 +94,6 @@ make -j8
 - 20251118:添加从bag包查看pcl::pointcloud2类型点云数据字段格式
     - 使用方法: python/pcl2_msg_check.py文件中修改点云bag包路径
                 python3 pcl2_msg_check.py
+- 20260113:
+    - 添加livox2pcl2节点，将livox格式数据转为pcl2格式，保留livox字段内容
+    - 添加rslidar_fusion阶段，针对山猫m20，将前后激光雷达点云进行数据融合，其中外参在驱动里面做好了的，并且将前激光雷达imu数据转到base_link下
