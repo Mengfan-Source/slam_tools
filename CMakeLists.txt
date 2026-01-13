@@ -128,3 +128,20 @@ target_link_libraries(merge_points_online
   glog
   gflags
 )
+add_executable(livox2pcl2  src/src/livox2pcl2.cpp)   
+target_link_libraries(livox2pcl2
+                                         ${catkin_LIBRARIES}  
+                                         ${PCL_LIBRARIES}
+                                         tbb
+                                         glog 
+                                         gflags#对于tbb、glog、gflags等库，只需要链接到可执行文件中，并不需要find_package和include_directories
+                                         )
+add_executable(rslidar_fusion  src/src/rslidar_fusion.cpp)   
+target_link_libraries(rslidar_fusion
+                                         ${catkin_LIBRARIES}  
+                                         ${PCL_LIBRARIES}
+                                         tbb
+                                         glog 
+                                         gflags#对于tbb、glog、gflags等库，只需要链接到可执行文件中，并不需要find_package和include_directories
+                                         )
+                                         

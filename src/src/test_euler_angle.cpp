@@ -62,6 +62,8 @@ int main(){
     //将四元数转换为ZYX欧拉角
     Eigen::Vector3d rpy_q1 = q_1.toRotationMatrix().eulerAngles(2,1,0);//zyx顺序，即roll pitch yaw顺序
     std::cout << "airy rpy from quaterniond = \n" << rpy_q1 * RAD2DEG << std::endl; //roll pitch yaw
+    Eigen::Vector3d rpy_q2 = q_1.toRotationMatrix().inverse().eulerAngles(2,1,0);//zyx顺序，即roll pitch yaw顺序
+    std::cout << "airy rpy from quaterniond = \n" << rpy_q2 * RAD2DEG << std::endl; //roll pitch yaw
     //将四元数转换为旋转矩阵
     Eigen::Matrix3d R_q1 = q_1.toRotationMatrix();
     std::cout << "airy R from quaterniond = \n" << R_q1 << std::endl;
