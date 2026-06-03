@@ -9,6 +9,9 @@
 ### 7.测试几个库旋转矩阵、四元数、欧拉角、李代数的互相转换关系
 ### 8.配准相邻两帧相机输出的点云，配准之前滤波（11所给的数据包做验证）
 ### 9.测试rs_lidar数据转换
+### 10.拆分bag包脚本
+### 11.测试bag包中sensor_msgs/PointCloud2数据字段
+### 12.添加ros2bag包时间戳解析到csv文件中 (ROS2)
 ## 编译安装
 ### 1.下载源码
 ```bash
@@ -52,7 +55,8 @@ make -j8
     - 添加了滤波程序，滤波操作并行处理，但是报错尚未解决
 - 20250319:添加rslidar激光雷达测试程序:/home/xmf/xmf_slam/slam_tools/src/src/rslidar_test.cpp
     - 主要为了测试rslidar的pointcloud2数据字段格式及其转换
-    - 适配的数据格式：XYZRTF   ----->这里需要修改驱动/home/xmf/XMF_Driver/rslidar_sdk_ws/src/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，现在设置为XYZRTF
+    - 适配的数据格式：XYZRTF   ----->这里需要修改驱动/home/xmf/XMF_Driver/rslidar_sdk_ws/sr'point_step =', msg.point_step)   # 26 字节，与你给出的一致
+bag.close()c/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，现在设置为XYZRTF
         rslidar_sdk的readme中说明的数据格式如下：
         ```C++
         struct PointXYZIRTF
@@ -98,5 +102,20 @@ make -j8
     - 添加livox2pcl2节点，将livox格式数据转为pcl2格式，保留livox字段内容
     - 添加rslidar_fusion阶段，针对山猫m20，将前后激光雷达点云进行数据融合，其中外参在驱动里面做好了的，并且将前激光雷达imu数据转到base_link下
 - 20260305:
-    - 添加拆分bag包脚本
-
+    - 添加拆分bag包脚本(ros1)
+        - 脚本位置
+        ```bash
+        bash/rosbag_split.sh
+        ```
+- 20260306:
+    - 测试bag包中sensor_msgs/PointCloud2数据字段
+        -脚本位置
+        ```bash
+        python/pcl2_msg_check.py
+        ```
+- 20260603:
+    - 添加ros2bag包时间戳解析到csv文件中 (ROS2)
+    ```bash
+    pip install rosbag2_py rclpy
+    python3 extract_timestamps.py /home/xmf/xmf_bags/gangbeng/rosbag2_2026_06_03-08_52_06 output.csv
+    ```
