@@ -119,3 +119,12 @@ bag.close()c/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，�
     pip install rosbag2_py rclpy
     python3 extract_timestamps.py /home/xmf/xmf_bags/gangbeng/rosbag2_2026_06_03-08_52_06 output.csv
     ```
+- 20260820:
+    - 添加针对mapping_offline_test生成的关键帧转为csv的python脚本
+    ```bash
+    #使用方式（默认保留十八位小数，如需改东调整第48行即可）
+    python3 keyframes_to_csv.py /home/xmf/CETCRobot/data/map/mapping_offline_test/map/keyframes.txt
+    #会在给定txt文件目录下生成一个csv文件，可以使用plotjuggler查看
+    ```
+
+
