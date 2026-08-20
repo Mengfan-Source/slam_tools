@@ -126,5 +126,22 @@ bag.close()c/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，�
     python3 keyframes_to_csv.py /home/xmf/CETCRobot/data/map/mapping_offline_test/map/keyframes.txt
     #会在给定txt文件目录下生成一个csv文件，可以使用plotjuggler查看
     ```
+- 20260820:
+    - 添加针对mapping_offline_test生成的关键帧转为csv的python脚本
+    ```bash
+    #使用方式（默认保留十八位小数，如需改东调整第48行即可）
+    python3 keyframes_to_csv.py /home/xmf/CETCRobot/data/map/mapping_offline_test/map/keyframes.txt
+    #会在给定txt文件目录下生成一个csv文件，可以使用plotjuggler查看
+    ```
+    - 添加添加针对mapping_offline_test生成的关键帧的绝对轨迹误差ate计算
+    ```bash
+    #默认以 rtk_pose 为参考、lidar_pose 为估计轨迹，默认不做 6 自由度 Umeyama 刚体对齐
+    #逐帧计算 ATE
+    #用法：
+    python3 compute_ate.py keyframes.txt                          # 默认 rtk_pose vs lidar_pose
+    python3 compute_ate.py keyframes.txt --ref lidar_pose --est opti_pose_2   # 任意两两对比
+    python3 compute_ate.py keyframes.txt --align                  # 先做 6 自由度 Umeyama 刚体对齐
+    python3 compute_ate.py keyframes.txt --errors ate_errors.csv  # 导出逐帧误差
+    ```
 
 
