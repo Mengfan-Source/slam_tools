@@ -56,6 +56,16 @@ target_link_libraries(pcd_align
                                         ${yaml-cpp_LIBRARIES}
                                         yaml-cpp
                                         )
+#从yaml读取初值(欧拉角)对两个pcd点云做ICP与NDT配准，并按配准结果拼接原始点云，不使用gflags
+add_executable(pcd_align_icp_ndt src/src/pcd_align_icp_ndt.cpp src/src/ndt_3d.cc)
+target_link_libraries(pcd_align_icp_ndt
+                                        ${catkin_LIBRARIES}
+                                        ${PCL_LIBRARIES}
+                                        tbb
+                                        glog
+                                        ${yaml-cpp_LIBRARIES}
+                                        yaml-cpp
+                                        )
 add_executable(remove_ground  src/src/remove_ground_main.cpp src/src/remove_ground.cpp)   
 target_link_libraries(remove_ground
                                          ${catkin_LIBRARIES}  

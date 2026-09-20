@@ -12,6 +12,7 @@
 ### 10.拆分bag包脚本
 ### 11.测试bag包中sensor_msgs/PointCloud2数据字段
 ### 12.添加ros2bag包时间戳解析到csv文件中 (ROS2)
+### 13.从配置文件给定初值(平移+四元数)对两个pcd点云做ICP与NDT配准，并按配准结果拼接原始点云
 ## 编译安装
 ### 1.下载源码
 ```bash
@@ -143,5 +144,21 @@ bag.close()c/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，�
     python3 compute_ate.py keyframes.txt --align                  # 先做 6 自由度 Umeyama 刚体对齐
     python3 compute_ate.py keyframes.txt --errors ate_errors.csv  # 导出逐帧误差
     ```
-
-
+- 20260917:
+    - 添加读取两个pcd点云，根据给定初值分别做ICP与NDT配准，并按配准结果拼接原始点云的程序
+    - 程序不使用gflags，点云路径、配准初值、配准参数、输出路径全部从配置文件读取
+    - 配准初值在配置文件中给出，旋转部分为四元数(顺序x y z w，单位四元数)，配置文件：src/config/param_pcdalign_icp_ndt.yaml
+    - 程序会打印配准初值、ICP结果、NDT结果以及三者的平均最近邻距离，便于判断哪个结果可用
+    - 程序最后会把最终结果按四元数输出，可以直接写回配置文件中的init_pose
+    - 配准使用降采样点云(默认体素0.1m)，拼接使用的仍然是两个原始点云
+    ```bash
+    cd build
+    #在 src/config/param_pcdalign_icp_ndt.yaml 中修改点云路径与配准初值后，直接运行
+    ./pcd_align_icp_ndt
+    #也可以指定其他配置文件
+    ./pcd_align_icp_ndt /path/to/param.yaml
+    #结果默认保存在 ./result 目录下：
+    #  merged_points.pcd        拼接后的原始点云
+    #  source_transformed.pcd   按照最终结果变换后的source点云
+    #  registration_result.txt  配准初值、ICP与NDT结果的矩阵
+    ```

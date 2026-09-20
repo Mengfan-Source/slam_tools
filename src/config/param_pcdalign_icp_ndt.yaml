@@ -1,0 +1,50 @@
+YAML: 1.0
+# 待配准点云(source)与基准点云(target)
+source_path: /home/xmf/xmf_bags/S20/hongqiao/hand_set/2_3.pcd
+target_path: /home/xmf/xmf_bags/S20/hongqiao/hand_set/map_1floor_nolift.pcd   #基准点云路径
+
+#配准初值：平移单位m，旋转用四元数
+#四元数顺序为x y z w，需为单位四元数(模长不为1时程序会自动归一化)
+init_pose:
+  x: -160.140759735656076
+  y: 205.503
+  z: -11.244388
+  qx: -0.054583        #四元数x
+  qy: 0.0017967        #四元数y
+  qz: 0.2401598        #四元数z
+  qw: 0.9691958        #四元数w
+
+  # x: 2.02202
+  # y: -0.31339913
+  # z: 0.137840
+  # qx: 0.0        #四元数x
+  # qy: 0.0        #四元数y
+  # qz: 0.0        #四元数z
+  # qw: 1.0        #四元数w
+
+#配准输入点云降采样，只影响配准，拼接时使用的仍然是原始点云，<=0表示不降采样
+reg_voxel_leaf: 0.1
+
+#ICP相关参数
+icp_params:
+  max_iteration: 50                 #最大迭代次数
+  max_correspondence_distance: 2.0  #最大对应点距离，单位m，<=0表示不限制
+  transformation_epsilon: 1e-8      #变换收敛阈值
+  euclidean_fitness_epsilon: 1e-6   #均方误差收敛阈值
+
+#NDT相关参数
+ndt_params:
+  voxel_size: 0.5          #体素大小，单位m
+  max_iteration: 30        #最大迭代次数
+  use_nearby6: true        #是否使用上下左右前后6个近邻栅格
+  res_outlier_th: 20.0     #残差卡方阈值，用于剔除异常点
+  min_effective_pts: 10    #每轮迭代要求的最少有效点数
+
+#结果输出相关参数
+result_params:
+  final_result: ndt        #最终用于拼接的配准结果：icp 或 ndt
+  save_result: true        #是否保存结果点云与配准结果文本
+  binary_output: true      #是否以二进制格式保存点云(点云较大时建议开启)
+  merged_pcd: /home/xmf/xmf_bags/S20/hongqiao/hand_set/1_2_3.pcd                  #拼接后的原始点云
+  source_transformed_pcd: /home/xmf/xmf_bags/S20/hongqiao/hand_set/1_2_3_transformed.pcd #按最终结果变换后的source点云
+  result_txt: /home/xmf/xmf_bags/S20/hongqiao/hand_set/registration_result_2_3.txt            #配准初值、ICP与NDT结果的矩阵 
