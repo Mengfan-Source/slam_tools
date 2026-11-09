@@ -13,6 +13,7 @@
 ### 11.测试bag包中sensor_msgs/PointCloud2数据字段
 ### 12.添加ros2bag包时间戳解析到csv文件中 (ROS2)
 ### 13.从配置文件给定初值(平移+四元数)对两个pcd点云做ICP与NDT配准，并按配准结果拼接原始点云
+### 14.自动搜索指定网段内所有在先设备
 ## 编译安装
 ### 1.下载源码
 ```bash
@@ -161,4 +162,30 @@ bag.close()c/rslidar_sdk/CMakeLists.txt，第八行，默认设置的是XYZI，�
     #  merged_points.pcd        拼接后的原始点云
     #  source_transformed.pcd   按照最终结果变换后的source点云
     #  registration_result.txt  配准初值、ICP与NDT结果的矩阵
+    ```
+- 20261109:
+    - python/ping_sweep.py
+    - 使用方式
+    ```bash
+    # 默认扫描 192.168.31.1 到 192.168.31.254，并发执行 ping，并按 IP 排序汇总在线设备和延迟。
+
+    # 直接运行：
+
+    python3 ping_sweep.py
+
+    常用方式：
+
+    # 指定网段
+    python3 ping_sweep.py --network 192.168.1.0/24
+
+    # 简写，同样表示 192.168.31.0/24
+    python3 ping_sweep.py --network 192.168.31
+
+    # 调整超时和并发数
+    python3 ping_sweep.py --timeout 1.5 --workers 100
+
+    # 同时显示离线设备
+    python3 ping_sweep.py --include-offline
+
+    脚本仅使用 Python 标准库，支持 Linux、Windows 和 macOS。已通过语法、参数解析、ping 输出解析和汇总逻辑测试。当前沙箱环境会拦截 ICMP，因此实际扫描网段需要在具有 ICMP 权限的终端中运行；Linux 如果提示权限不足，可能需要使用 sudo 或授予 ping 的 CAP_NET_RAW 权限
     ```
